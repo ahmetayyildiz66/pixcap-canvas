@@ -1,20 +1,22 @@
 <template>
-  <PixcapCanvas />
+  <div class="container">
+    <PixcapEditor />
+  </div>
 </template>
 
 <script>
-import PixcapCanvas from "./components/PixcapCanvas.vue";
+import PixcapEditor from "./components/PixcapEditor.vue";
 
 export default {
   name: "App",
   components: {
-    PixcapCanvas,
+    PixcapEditor,
   },
 };
 </script>
 
 <style lang="scss">
-// p {
-//   color: blue;
-// }
+.container {
+  margin: 0 auto;
+}
 </style>
