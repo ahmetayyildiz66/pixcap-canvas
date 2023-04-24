@@ -1,8 +1,14 @@
 import Konva from "konva"
 
+import { Editor } from "@/Editor";
+import { StartBlock } from "@/blocks/StartBlock";
+import { renderBlock } from "@/blocks/renderBlock";
+import { renderImage } from "@/blocks/renderImage";
+
 class PixcapCanvas {
   stage: Konva.Stage;
   layer: Konva.Layer
+  editor: Editor
 
   // eslint-disable-next-line
   constructor(container: any) {
@@ -15,6 +21,8 @@ class PixcapCanvas {
     this.layer = new Konva.Layer({
       draggable: true
     })
+
+    this.editor = new Editor()
   }
 
   render() {
@@ -26,16 +34,20 @@ class PixcapCanvas {
     })
 
     this.layer.add(group)
+    const blocksGroup = new Konva.Group({ name: "blocks" })
+    group.add(blocksGroup)
 
-    const text = new Konva.Text({
-      x: 50,
-      y: 50,
-      width: 300,
-      text: "Hello Text",
-      fill: "red",
-    });
+    if (!this.editor.getBlocks().length) {
+      const startBlock = new StartBlock()
+      this.editor.createBlock(startBlock)
+    }
 
-    group.add(text);
+    const blocks = this.editor.getBlocks()
+
+    blocks.map(() => {
+      renderBlock({ group })
+      renderImage({ group })
+    })
   }
 }
 
