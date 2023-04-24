@@ -4,6 +4,7 @@ import { Editor } from "@/Editor";
 import { StartBlock } from "@/blocks/StartBlock";
 import { renderBlock } from "@/blocks/renderBlock";
 import { renderImage } from "@/blocks/renderImage";
+import { BLOCK_SIZE, BLOCK_SPACING, CANVAS_CENTER, CANVAS_POSITION_Y, IMAGE_SIZE } from "@/constants/sizes";
 
 class PixcapCanvas {
   stage: Konva.Stage;
@@ -44,9 +45,18 @@ class PixcapCanvas {
 
     const blocks = this.editor.getBlocks()
 
-    blocks.map(() => {
-      renderBlock({ group })
-      renderImage({ group })
+    blocks.map((_, index) => {
+      renderBlock({
+        group,
+        x: CANVAS_CENTER,
+        y: CANVAS_POSITION_Y + BLOCK_SIZE * index
+      })
+
+      renderImage({
+        group,
+        x: CANVAS_CENTER + IMAGE_SIZE /2,
+        y: CANVAS_POSITION_Y + IMAGE_SIZE / 2 + BLOCK_SPACING * index
+      })
     })
   }
 }

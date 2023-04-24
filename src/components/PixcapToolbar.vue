@@ -25,6 +25,8 @@ export default {
   justify-content: space-between;
 
   border-bottom: 1px solid var(--color-grey);
+  background-color: var(--color-white);
+  
   &__heading-primary {
     font-size: 1.6rem;
     font-weight: 600;
