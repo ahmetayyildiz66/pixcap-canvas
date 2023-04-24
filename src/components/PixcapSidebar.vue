@@ -1,9 +1,13 @@
 <template>
-  <div class="left-sidebar" :class="{ 'narrow-sidebar': !isShownSidebar }">
-    
-    <div class="left-sidebar__content" v-if="isShownSidebar">
+  <div
+    class="left-sidebar"
+    :class="{ 'narrow-sidebar': !isOpen }"
+  >
+    <div class="left-sidebar__content" v-if="isOpen">
       <h3 class="left-sidebar__heading">Blocks</h3>
-      <PixcapBlockSearch />
+      <PixcapBlockSearch
+        @searchInput="searchField"
+      />
     </div>
 
     <button @click="toggleSidebar" class="toggle-icon">
@@ -11,54 +15,47 @@
       <IconArrowRight v-else />
     </button>
 
-    <PixcapTabs v-if="isShownSidebar" @selectedTab="selectedTab">
-      <PixcapSingleTab :title="tab1" :is-active="selected === tab1"
-        >
-        <PixcapBlockItem svgName="IconFunction" title="Move" description="Moves an item" />
-        <PixcapBlockItem svgName="IconOutput" title="Output" description="Shows the output" />
-        </PixcapSingleTab
-      >
+    <PixcapTabs v-if="isOpen" @selectedTab="selectedTab">
+      <PixcapSingleTab :title="tab1" :is-active="selected === tab1">
+        <PixcapBlockItem
+          v-for="block in blocks"
+          :key="`${block.id}-${block.title}`"
+          :svgName="block.svgName"
+          :title="block.title"
+          :description="block.description"
+          @isDragging="draggingStart"
+        />
+      </PixcapSingleTab>
     </PixcapTabs>
   </div>
 </template>
 
-<script>
+<script setup>
+import { ref } from "vue";
+
+import { useLeftPanel } from "@/composables/useLeftPanel";
 import PixcapBlockSearch from "./PixcapBlockSearch.vue";
-import PixcapTabs from "./PixcapTabs.vue"
-import PixcapSingleTab from "./PixcapSingleTab.vue"
-import PixcapBlockItem from "./PixcapBlockItem.vue"
+import PixcapTabs from "./PixcapTabs.vue";
+import PixcapSingleTab from "./PixcapSingleTab.vue";
+import PixcapBlockItem from "./PixcapBlockItem.vue";
 
-import IconArrowRight from "./icons/IconArrowRight.vue";
-import IconArrowLeft from "./icons/IconArrowLeft.vue";
+import triggerBlocks from "../assets/blocks.json";
 
-export default {
-  name: "LeftSidebar",
-  data() {
-    return {
-      isShownSidebar: true,
-      selected: "Triggers",
-      tab1: "Blocks",
-      tab2: "Actions",
-      tab3: "Loggers",
-    };
-  },
-  components: {
-    PixcapBlockSearch,
-    PixcapTabs,
-    PixcapSingleTab,
-    PixcapBlockItem,
-    IconArrowRight,
-    IconArrowLeft,
-  },
-  methods: {
-    toggleSidebar() {
-      this.isShownSidebar = !this.isShownSidebar;
-    },
+const { isOpen, toggleSidebar } = useLeftPanel();
+const selected = ref("Triggers");
+const tab1 = "Triggers";
 
-    selectedTab(index) {
-      this.selected = index;
-    },
-  },
+const blocks = ref(triggerBlocks);
+const searchField = (text) => {
+  blocks.value = triggerBlocks.filter((block) =>
+    block.title.toLowerCase().includes(text.toLowerCase())
+  );
+};
+const selectedTab = (index) => {
+  selected.value = index;
+};
+const draggingStart = (value) => {
+  console.log("valuee: ", value);
 };
 </script>
 
@@ -76,7 +73,7 @@ export default {
     font-weight: 500;
     font-size: 1.5rem;
   }
-
+  
   &__content {
     padding: 0 3rem;
   }

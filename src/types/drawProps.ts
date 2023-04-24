@@ -1,7 +1,8 @@
-import Konva from "konva";
-
 export interface drawProps {
-  group: Konva.Group;
+  group: any;
   x: number;
   y: number;
+  fill?: string;
+  draggable?: boolean;
+  svgName?: string
 }

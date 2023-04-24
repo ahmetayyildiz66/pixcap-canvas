@@ -1,6 +1,6 @@
 <template>
   <div class="search">
-    <input class="search__input" type="text" placeholder="Search blocks" />
+    <input class="search__input" v-model="text" type="text" placeholder="Search blocks" />
     <IconSearch class="search__icon" />
   </div>
 </template>
@@ -12,6 +12,18 @@ export default {
   components: {
     IconSearch,
   },
+
+  data() {
+    return {
+      text: ""
+    }
+  },
+
+  watch: {
+    text(newVal) {
+      this.$emit("search-input", newVal)
+    }
+  }
 };
 </script>
 

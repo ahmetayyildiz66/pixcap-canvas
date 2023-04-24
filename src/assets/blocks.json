@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "svgName": "IconFunction",
+    "title": "Move",
+    "description": "Moves an item"
+  },
+  {
+    "id": 2,
+    "svgName": "IconOutput",
+    "title": "Output",
+    "description": "Shows the output"
+  }
+]

@@ -1,9 +1,11 @@
-import { IMAGE_SIZE } from "@/constants";
-import { drawProps } from "@/types/drawProps";
 import Konva from "konva";
 
-export const renderImage = ({ group, x, y }: drawProps) => {
+import { IMAGE_SIZE } from "@/constants";
+import { imageProps } from "@/types/imageProps";
+
+export const renderImage = ({ group, x, y, svgName }: imageProps) => {
   const img = new window.Image();
+  
   img.onload = () => {
     const canvas = document.createElement("canvas");
     canvas.width = IMAGE_SIZE;
@@ -14,8 +16,9 @@ export const renderImage = ({ group, x, y }: drawProps) => {
       image: canvas,
       x,
       y,
+      draggable: false,
     });
     group.add(image);
   };
-  img.src = require("../assets/logo.png");
+  img.src = require(`../components/icons/${svgName}.svg`);
 };

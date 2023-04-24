@@ -1,64 +1,62 @@
-import Konva from "konva"
-
-import { Editor } from "@/Editor";
 import { StartBlock } from "@/blocks/StartBlock";
+import { Editor } from "@/Editor";
+import Konva from "konva";
 import { renderBlock } from "@/blocks/renderBlock";
 import { renderImage } from "@/blocks/renderImage";
-import { BLOCK_SIZE, BLOCK_SPACING, CANVAS_CENTER, CANVAS_POSITION_Y, IMAGE_SIZE } from "@/constants/sizes";
+import {
+  BLOCK_SPACING,
+  CANVAS_CENTER,
+  CANVAS_POSITION_Y,
+  IMAGE_SIZE,
+} from "@/constants/sizes";
+import { useGroup } from "@/composables/useGroup";
 
-class PixcapCanvas {
-  stage: Konva.Stage;
-  layer: Konva.Layer
-  editor: Editor
+class AutomationCanvas {
+  stage;
+  layer: any;
+  editor: Editor;
 
-  // eslint-disable-next-line
   constructor(container: any) {
     this.stage = new Konva.Stage({
       container,
       width: window.innerWidth,
-      height: window.innerHeight
-    })
+      height: window.innerHeight,
+    });
 
-    this.layer = new Konva.Layer({
-      draggable: true
-    })
-
-    this.editor = new Editor()
+    this.editor = new Editor();
   }
 
   render() {
-    this.stage.add(this.layer)
+    this.layer = new Konva.Layer();
+    const { allGroups } = useGroup();
 
-    const group = new Konva.Group({
-      draggable: true,
-      name: "floating"
-    })
+    this.stage.add(this.layer);
 
-    this.layer.add(group)
-    const blocksGroup = new Konva.Group({ name: "blocks" })
-    group.add(blocksGroup)
+    this.layer.add(allGroups);
+    const blocksGroup = new Konva.Group({ name: "blocks" });
+    allGroups.add(blocksGroup);
 
     if (!this.editor.getBlocks().length) {
-      const startBlock = new StartBlock()
-      this.editor.createBlock(startBlock)
+      const block = new StartBlock();
+      this.editor.createBlock(block);
     }
 
-    const blocks = this.editor.getBlocks()
+    const blocks = this.editor.getBlocks();
 
     blocks.map((_, index) => {
       renderBlock({
-        group,
+        group: allGroups,
         x: CANVAS_CENTER,
-        y: CANVAS_POSITION_Y + BLOCK_SIZE * index
-      })
-
+        y: CANVAS_POSITION_Y + BLOCK_SPACING * index,
+      });
       renderImage({
-        group,
-        x: CANVAS_CENTER + IMAGE_SIZE /2,
-        y: CANVAS_POSITION_Y + IMAGE_SIZE / 2 + BLOCK_SPACING * index
-      })
-    })
+        group: allGroups,
+        x: CANVAS_CENTER + IMAGE_SIZE / 2,
+        y: CANVAS_POSITION_Y + IMAGE_SIZE / 2 + BLOCK_SPACING * index,
+        svgName: "IconFlag",
+      });
+    });
   }
 }
 
-export default PixcapCanvas
+export default AutomationCanvas;
