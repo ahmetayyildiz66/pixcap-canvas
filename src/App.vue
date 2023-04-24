@@ -1,9 +1,16 @@
 <template>
-  <p>Test</p>
+  <PixcapCanvas />
 </template>
 
-<script lang="ts" setup>
+<script>
+import PixcapCanvas from "./components/PixcapCanvas.vue";
 
+export default {
+  name: "App",
+  components: {
+    PixcapCanvas,
+  },
+};
 </script>
 
 <style lang="scss">
