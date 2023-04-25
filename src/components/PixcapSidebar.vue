@@ -15,6 +15,7 @@
       <IconArrowRight v-else />
     </button>
 
+
     <PixcapTabs v-if="isOpen" @selectedTab="selectedTab">
       <PixcapSingleTab :title="tab1" :is-active="selected === tab1">
         <PixcapBlockItem
@@ -60,6 +61,7 @@ const searchField = (text) => {
 const selectedTab = (index) => {
   selected.value = index;
 };
+
 </script>
 
 <style lang="scss" scoped>

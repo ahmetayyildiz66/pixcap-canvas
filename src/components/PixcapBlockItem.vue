@@ -1,17 +1,28 @@
 <template>
-  <div class="block" draggable="true" @dragstart.prevent="dragStart" @click="onBlock">
+  <div
+    class="block"
+    draggable="true"
+    @dragstart.prevent="dragStart"
+    @click="onBlock"
+  >
     <span class="block__image">
       <img :src="imagePath" />
     </span>
     <div class="block__content">
-      <h4 class="block__title">{{ title }}</h4>
+      <h4 class="block__title">{{ type }}</h4>
       <p class="block__description">{{ description }}</p>
     </div>
   </div>
+
+  <PixcapModal v-if="isModalOpen" :title="title" :blockName="description" />
 </template>
 
-<script>
+<script lang="ts" setup>
 import Konva from "konva";
+import { defineProps, ref, computed, defineEmits, nextTick } from "vue"
+
+import PixcapModal from "./PixcapModal.vue";
+import { useToggleModal } from "@/composables/useToggleModal";
 import { useGroup } from "@/composables/useGroup";
 import { renderBlock } from "@/blocks/renderBlock";
 import { useLeftPanel } from "@/composables/useLeftPanel";
@@ -20,36 +31,28 @@ import { BLOCK_SIZE, IMAGE_SIZE, SEPARATOR_SIZE } from "@/constants/sizes";
 import { renderPlaceholder } from "@/blocks/renderPlaceholder";
 import { usePosition } from "@/composables/usePosition";
 
-export default {
-  name: "BlockItem",
-  props: {
-    svgName: String,
+const isDragging = ref(false)
+const { isModalOpen } = useToggleModal()
+
+const props = defineProps({
+  svgName: String,
     title: String,
     type: String,
     description: String,
     groupSvgName: String,
-  },
+})
 
-  data() {
-    return {
-      isDragging: false,
-    };
-  },
+const imagePath = computed(() => {
+  return require(`./icons/${props.svgName}.svg`);
+})
 
-  computed: {
-    imagePath() {
-      return require(`./icons/${this.svgName}.svg`);
-    },
-  },
+const emits = defineEmits(['is-dragging'])
 
-  methods: {
-    async dragStart() {
-      const { getPositionX, getPositionY, updatePosition } = usePosition();
+const dragStart = async () => {
+  const { getPositionX, getPositionY, updatePosition } = usePosition();
       const { closePanel } = useLeftPanel();
-      this.$emit("is-dragging", this.isDragging);
-      closePanel();
 
-      await this.$nextTick();
+      await nextTick();
       const { addToGroup } = useGroup();
 
       const group = new Konva.Group({
@@ -77,7 +80,7 @@ export default {
 
       renderBlock({
         group,
-        type: this.type,
+        type: props.type,
         x: getPositionX(),
         y: getPositionY(),
         draggable: false,
@@ -87,13 +90,11 @@ export default {
         group,
         x: getPositionX() + IMAGE_SIZE / 2,
         y: getPositionY() + IMAGE_SIZE / 2,
-        svgName: this.groupSvgName,
+        svgName: props.groupSvgName,
       });
 
       addToGroup(group);
-    },
-  },
-};
+}
 </script>
 
 <style lang="scss" scoped>
