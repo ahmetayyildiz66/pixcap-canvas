@@ -3,12 +3,15 @@
     "id": 1,
     "svgName": "IconFunction",
     "title": "Move",
-    "description": "Moves an item"
+    "description": "Moves an item",
+    "groupSvgName": "IconFunction"
+
   },
   {
     "id": 2,
     "svgName": "IconOutput",
     "title": "Output",
-    "description": "Shows the output"
+    "description": "Shows the output",
+    "groupSvgName": "IconOutput"
   }
 ]

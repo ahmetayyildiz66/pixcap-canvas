@@ -1,7 +1,7 @@
 <template>
   <div class="block" draggable="true" @dragstart.prevent="dragStart">
     <span class="block__image">
-      <img :src="imagePath" class="" />
+      <img :src="imagePath" />
     </span>
     <div class="block__content">
       <h4 class="block__title">{{ title }}</h4>
@@ -11,27 +11,28 @@
 </template>
 
 <script>
-import Konva from "konva"
-
+import Konva from "konva";
 import { useGroup } from "@/composables/useGroup";
 import { renderBlock } from "@/blocks/renderBlock";
 import { useLeftPanel } from "@/composables/useLeftPanel";
 import { renderImage } from "@/blocks/renderImage";
-import { IMAGE_SIZE } from "@/constants/sizes";
+import { BLOCK_SIZE, IMAGE_SIZE, SEPARATOR_SIZE } from "@/constants/sizes";
+import { renderPlaceholder } from "@/blocks/renderPlaceholder";
+import { usePosition } from "@/composables/usePosition";
 
 export default {
   name: "BlockItem",
+  props: {
+    svgName: String,
+    title: String,
+    description: String,
+    groupSvgName: String,
+  },
 
   data() {
     return {
       isDragging: false,
     };
-  },
-
-  props: {
-    svgName: String,
-    title: String,
-    description: String,
   },
 
   computed: {
@@ -41,34 +42,52 @@ export default {
   },
 
   methods: {
-    async dragStart(ev) {
+    async dragStart() {
+      const { getPositionX, getPositionY, updatePosition } = usePosition();
       const { closePanel } = useLeftPanel();
-      const { clientX, clientY } = ev;
-
       this.$emit("is-dragging", this.isDragging);
       closePanel();
 
       await this.$nextTick();
-      const { addToGroup } = useGroup()
+      const { addToGroup } = useGroup();
 
       const group = new Konva.Group({
         name: "dragging",
         draggable: true,
       });
 
+      const placeholderGroup = new Konva.Group({
+        name: "placeholder",
+        draggable: false,
+      });
+
+      updatePosition(getPositionX(), getPositionY() + BLOCK_SIZE);
+
+      renderPlaceholder({
+        group: placeholderGroup,
+        x: getPositionX() + BLOCK_SIZE / 2,
+        y: getPositionY(),
+        svgName: "IconSeparator",
+      });
+
+      addToGroup(placeholderGroup);
+
+      updatePosition(getPositionX(), getPositionY() + SEPARATOR_SIZE);
+
       renderBlock({
         group,
-        x: clientX,
-        y: clientY,
+        x: getPositionX(),
+        y: getPositionY(),
         draggable: false,
       });
 
       renderImage({
         group,
-        x: clientX + IMAGE_SIZE / 2,
-        y: clientY + IMAGE_SIZE / 2,
+        x: getPositionX() + IMAGE_SIZE / 2,
+        y: getPositionY() + IMAGE_SIZE / 2,
         svgName: this.groupSvgName,
       });
+
       addToGroup(group);
     },
   },
@@ -81,6 +100,7 @@ export default {
   align-items: center;
   width: 27.5rem;
   height: 7rem;
+
   &__image {
     width: 2.8rem;
     height: 2.8rem;
@@ -91,17 +111,21 @@ export default {
     justify-content: center;
     margin: 0 1.8rem;
   }
+
   &__content {
     width: 19rem;
   }
+
   &__title {
     font-size: 1.4rem;
     font-weight: 500;
   }
+
   &__description {
     font-size: 1.2rem;
     color: #a8a5ae;
   }
+
   &:hover {
     border-radius: 5px;
     cursor: pointer;

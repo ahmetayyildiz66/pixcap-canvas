@@ -10,6 +10,7 @@ import {
   IMAGE_SIZE,
 } from "@/constants/sizes";
 import { useGroup } from "@/composables/useGroup";
+import { usePosition } from "@/composables/usePosition";
 
 class AutomationCanvas {
   stage;
@@ -27,6 +28,8 @@ class AutomationCanvas {
   }
 
   render() {
+    const { updatePosition } = usePosition()
+
     this.layer = new Konva.Layer();
     const { allGroups } = useGroup();
 
@@ -47,15 +50,17 @@ class AutomationCanvas {
       renderBlock({
         group: allGroups,
         x: CANVAS_CENTER,
-        y: CANVAS_POSITION_Y + BLOCK_SPACING * index,
+        y: CANVAS_POSITION_Y,
       });
       renderImage({
         group: allGroups,
         x: CANVAS_CENTER + IMAGE_SIZE / 2,
-        y: CANVAS_POSITION_Y + IMAGE_SIZE / 2 + BLOCK_SPACING * index,
+        y: CANVAS_POSITION_Y + IMAGE_SIZE / 2,
         svgName: "IconFlag",
       });
     });
+
+    updatePosition(CANVAS_CENTER, CANVAS_POSITION_Y)
   }
 }
 

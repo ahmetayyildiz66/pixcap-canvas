@@ -11,7 +11,7 @@
     </div>
 
     <button @click="toggleSidebar" class="toggle-icon">
-      <IconArrowLeft v-if="isShownSidebar" />
+      <IconArrowLeft v-if="isOpen" />
       <IconArrowRight v-else />
     </button>
 
@@ -23,7 +23,7 @@
           :svgName="block.svgName"
           :title="block.title"
           :description="block.description"
-          @isDragging="draggingStart"
+          :groupSvgName="block.groupSvgName"
         />
       </PixcapSingleTab>
     </PixcapTabs>
@@ -39,6 +39,9 @@ import PixcapTabs from "./PixcapTabs.vue";
 import PixcapSingleTab from "./PixcapSingleTab.vue";
 import PixcapBlockItem from "./PixcapBlockItem.vue";
 
+import IconArrowLeft from "./icons/IconArrowLeft.vue"
+import IconArrowRight from "./icons/IconArrowRight.vue"
+
 import triggerBlocks from "../assets/blocks.json";
 
 const { isOpen, toggleSidebar } = useLeftPanel();
@@ -46,16 +49,15 @@ const selected = ref("Triggers");
 const tab1 = "Triggers";
 
 const blocks = ref(triggerBlocks);
+
 const searchField = (text) => {
   blocks.value = triggerBlocks.filter((block) =>
     block.title.toLowerCase().includes(text.toLowerCase())
   );
 };
+
 const selectedTab = (index) => {
   selected.value = index;
-};
-const draggingStart = (value) => {
-  console.log("valuee: ", value);
 };
 </script>
 
