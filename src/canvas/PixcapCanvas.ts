@@ -48,6 +48,7 @@ class AutomationCanvas {
     blocks.map((_, index) => {
       renderBlock({
         group: allGroups,
+        blocks,
         x: CANVAS_CENTER,
         y: CANVAS_POSITION_Y,
       });

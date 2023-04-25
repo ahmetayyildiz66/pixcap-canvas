@@ -1,7 +1,7 @@
 <template>
   <div class="modal-overlay">
     <div class="modal">
-      <h6>{{ title }}</h6>
+      <h6>{{ getBlock().type }} -  {{ getBlock().id}}</h6>
       <p>{{ blockName }}</p>
       <button>Go Home</button>
     </div>
@@ -15,6 +15,7 @@
 import { defineProps } from "vue"
 
 import { useToggleModal } from "@/composables/useToggleModal";
+import { useSelectedBlock } from "@/composables/useSelectedBlock";
 import IconClose from "./icons/IconClose.vue"
 
 const props = defineProps({
@@ -22,8 +23,13 @@ const props = defineProps({
   blockName: String
 })
 
-
 const { closeModal } = useToggleModal()
+const { increaseId, getBlockId, selectedBlockId, getSelectedBlock } = useSelectedBlock()
+
+const getBlock = () => {
+  const selected = getSelectedBlock(getBlockId())
+  return selected
+}
     
 </script>
 
