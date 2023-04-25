@@ -29,7 +29,8 @@ export const renderBlock = ({ group, blocks, type, x, y, fill = '#fff', draggabl
 
   rect.on('click', () => {
     if (type === 'Move' || type === 'Output') {
-      selectedBlock(getBlockId())
+      const clickedBlock = getAllBlocks().value.find(bl => bl.type === type)
+      selectedBlock(clickedBlock!.id)
       openModal()
     }
   })

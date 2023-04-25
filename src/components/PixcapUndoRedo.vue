@@ -7,45 +7,43 @@
       <IconRedo />
     </button>
 
-    <button class="undo-redo__buttons" @click="play">Play</button>
+    <button class="undo-redo__buttons" @click="play">
+      <IconPlay />
+    </button>
   </div>
 </template>
 
-<script>
+<script setup>
+import { ref } from "vue"
+
 import { ceo } from "@/data/ceo";
 import { EmployeeOrgApp } from "@/concrete/EmployeeOrgApp";
+import { useToggleModal } from "@/composables/useToggleModal";
+import { useMove } from "@/composables/useMove";
 
 import IconRedo from "./icons/IconRedo"
 import IconUndo from "./icons/IconUndo"
+import IconPlay from "./icons/IconPlay"
 
-export default {
-  components: {
-    IconRedo,
-    IconUndo,
-  },
+const app = new EmployeeOrgApp(ceo)
 
-  data() {
-    return {
-      app: EmployeeOrgApp
-    }
-  },
+const { openModal } = useToggleModal()
+const { getMovingEmployees, setUserList } = useMove()
 
-  mounted() {
-    this.app = new EmployeeOrgApp(ceo)
-  },
+const undo = () => {
+  app.undo()
+}
 
-  methods: {
-    undo() {
-      this.app.undo()
-    },
-    redo() {
-      this.app.redo()
-    },
-    play() {
-      this.app.move()
-    }
-  }
-};
+const redo = () => {
+  app.redo()
+}
+
+const play = () => {
+  const movingEmployees = getMovingEmployees()
+  const ceo = app.move(movingEmployees.employeeId, movingEmployees.supervisorId)
+  setUserList(ceo)
+  openModal()
+}
 </script>
 
 <style lang="scss" scoped>
