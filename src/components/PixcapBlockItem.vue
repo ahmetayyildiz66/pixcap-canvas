@@ -1,5 +1,5 @@
 <template>
-  <div class="block" draggable="true" @dragstart.prevent="dragStart">
+  <div class="block" draggable="true" @dragstart.prevent="dragStart" @click="onBlock">
     <span class="block__image">
       <img :src="imagePath" />
     </span>
@@ -25,6 +25,7 @@ export default {
   props: {
     svgName: String,
     title: String,
+    type: String,
     description: String,
     groupSvgName: String,
   },
@@ -53,7 +54,7 @@ export default {
 
       const group = new Konva.Group({
         name: "dragging",
-        draggable: true,
+        draggable: false,
       });
 
       const placeholderGroup = new Konva.Group({
@@ -76,6 +77,7 @@ export default {
 
       renderBlock({
         group,
+        type: this.type,
         x: getPositionX(),
         y: getPositionY(),
         draggable: false,

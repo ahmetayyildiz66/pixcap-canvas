@@ -13,6 +13,7 @@ export const renderImage = ({ group, x, y, svgName }: imageProps) => {
     const image = new Konva.Image({
       image: canvas,
       x,
+      listening: false,
       y,
       draggable: false,
     });

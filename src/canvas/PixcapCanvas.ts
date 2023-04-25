@@ -4,7 +4,6 @@ import Konva from "konva";
 import { renderBlock } from "@/blocks/renderBlock";
 import { renderImage } from "@/blocks/renderImage";
 import {
-  BLOCK_SPACING,
   CANVAS_CENTER,
   CANVAS_POSITION_Y,
   IMAGE_SIZE,

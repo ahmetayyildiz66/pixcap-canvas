@@ -22,6 +22,7 @@
           :key="`${block.id}-${block.title}`"
           :svgName="block.svgName"
           :title="block.title"
+          :type="block.type"
           :description="block.description"
           :groupSvgName="block.groupSvgName"
         />
@@ -45,8 +46,8 @@ import IconArrowRight from "./icons/IconArrowRight.vue"
 import triggerBlocks from "../assets/blocks.json";
 
 const { isOpen, toggleSidebar } = useLeftPanel();
-const selected = ref("Triggers");
-const tab1 = "Triggers";
+const selected = ref("Blocks");
+const tab1 = "Blocks";
 
 const blocks = ref(triggerBlocks);
 

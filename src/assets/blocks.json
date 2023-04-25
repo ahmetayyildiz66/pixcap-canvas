@@ -3,6 +3,7 @@
     "id": 1,
     "svgName": "IconFunction",
     "title": "Move",
+    "type": "move",
     "description": "Moves an item",
     "groupSvgName": "IconFunction"
 
@@ -11,6 +12,7 @@
     "id": 2,
     "svgName": "IconOutput",
     "title": "Output",
+    "type": "output",
     "description": "Shows the output",
     "groupSvgName": "IconOutput"
   }
