@@ -1,6 +1,9 @@
 import { findAndMove } from "../utils/findAndMove.js"
+import { IUndoRedo } from "@/interfaces/IUndoRedo.js";
+import { moveSubordinates } from "@/utils/moveSubordinates";
 
 export class EmployeeOrgApp implements IEmployeeOrgApp {
+  stack: IUndoRedo[] = []
   ceo: Employee;
 
   constructor(ceo: Employee) {
@@ -8,11 +11,13 @@ export class EmployeeOrgApp implements IEmployeeOrgApp {
   }
 
   move(employeeId: number, supervisorID: number): Employee {
-    this.ceo = findAndMove(employeeId, supervisorID)
+    const movedElement = findAndMove(employeeId, supervisorID)
+    this.ceo = movedElement.ceo
+    this.stack.push(movedElement.movedElements)
     return this.ceo
   }
-  undo(): void {
-    console.log("EmployeeOrgApp: undo");
+  undo(): Employee {
+    return moveSubordinates(this.ceo, this.stack.pop())
   }
   redo(): void {
     console.log("EmployeeOrgApp: redo");

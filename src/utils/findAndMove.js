@@ -35,7 +35,7 @@ export const findAndMove = (uniqueId, supervisorId) => {
   while (stack.length) {
     const [curr, parent] = stack.pop();
 
-    if (curr.uniqueId === supervisorId) {
+    if (curr.uniqueId === supervisorId && movingItem.uniqueId !== 0) {
       curr.subordinates.push(movingItem);
     }
 

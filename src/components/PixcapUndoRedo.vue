@@ -31,7 +31,9 @@ const { openModal } = useToggleModal()
 const { getMovingEmployees, setUserList } = useMove()
 
 const undo = () => {
-  app.undo()
+  const ceo = app.undo()
+  setUserList(ceo)
+  openModal()
 }
 
 const redo = () => {

@@ -19,10 +19,10 @@
         />
       </div>
       <button @click="onSave" v-if="getBlock().type === 'Move'">Save</button>
-      <div v-if="getUserList().ceo">
-        <p>{{ getUserList().ceo?.uniqueId }} - {{ getUserList().ceo.name }}</p>
+      <div v-if="getUserList()">
+        <p>{{ getUserList().uniqueId }} - {{ getUserList().name }}</p>
         <ul
-          v-for="subordinate in getUserList().ceo.subordinates"
+          v-for="subordinate in getUserList().subordinates"
           :key="subordinate.uniqueId"
         >
           <li>{{ subordinate.uniqueId }} - {{ subordinate.name }}</li>
