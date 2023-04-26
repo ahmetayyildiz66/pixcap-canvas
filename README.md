@@ -1,5 +1,16 @@
 # pixcap-canvas
 
+## What I've used
+* Vue 3
+* Composition API
+* Canvas(Konva)
+* TypeScript
+* SCSS
+
+## How did I implement it?
+* I did NOT copy the previous state while doing **Undo/Redo**
+* I iterated over the nested object by using a **while** loop because recursion has some performance issues
+
 ## Project setup
 ```
 yarn install
