@@ -8,6 +8,7 @@ const allGroups = reactive(
   })
 );
 export const useGroup = () => {
+  // eslint-disable-next-line
   const addToGroup = (group: any) => {
     allGroups.add(group);
   };

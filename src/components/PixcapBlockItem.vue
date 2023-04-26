@@ -19,19 +19,17 @@
 
 <script lang="ts" setup>
 import Konva from "konva";
-import { defineProps, ref, computed, defineEmits, nextTick } from "vue"
+import { defineProps, computed, defineEmits, nextTick } from "vue"
 
 import PixcapModal from "./PixcapModal.vue";
 import { useToggleModal } from "@/composables/useToggleModal";
 import { useGroup } from "@/composables/useGroup";
 import { renderBlock } from "@/blocks/renderBlock";
-import { useLeftPanel } from "@/composables/useLeftPanel";
 import { renderImage } from "@/blocks/renderImage";
 import { BLOCK_SIZE, IMAGE_SIZE, SEPARATOR_SIZE } from "@/constants/sizes";
 import { renderPlaceholder } from "@/blocks/renderPlaceholder";
 import { usePosition } from "@/composables/usePosition";
 
-const isDragging = ref(false)
 const { isModalOpen } = useToggleModal()
 
 const props = defineProps({
@@ -46,12 +44,10 @@ const imagePath = computed(() => {
   return require(`./icons/${props.svgName}.svg`);
 })
 
-const emits = defineEmits(['is-dragging'])
+defineEmits(['is-dragging'])
 
 const dragStart = async () => {
   const { getPositionX, getPositionY, updatePosition } = usePosition();
-      const { closePanel } = useLeftPanel();
-
       await nextTick();
       const { addToGroup } = useGroup();
 

@@ -18,8 +18,6 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
-
 import { ceo } from "@/data/ceo";
 import { EmployeeOrgApp } from "@/concrete/EmployeeOrgApp";
 import { useToggleModal } from "@/composables/useToggleModal";

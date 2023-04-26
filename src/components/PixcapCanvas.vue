@@ -14,7 +14,6 @@ export default {
 
   mounted() {
     const { pixcapcanvas } = this.$refs
-    console.log('pixcapcanvas: ', pixcapcanvas)
     this.pixcapCanvas = new PixcapCanvas(pixcapcanvas)
 
     this.render()

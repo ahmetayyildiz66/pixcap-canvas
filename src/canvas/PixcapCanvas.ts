@@ -11,6 +11,7 @@ import {
 import { useGroup } from "@/composables/useGroup";
 import { usePosition } from "@/composables/usePosition";
 
+/* eslint-disable */
 class AutomationCanvas {
   stage;
   layer: any;

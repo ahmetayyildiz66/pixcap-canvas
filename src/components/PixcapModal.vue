@@ -25,7 +25,7 @@
         <button @click="onSave" v-if="getBlock()?.type === 'Move'">Save</button>
       </div>
       <div v-if="getUserList()" style="margin-top: 40px">
-        <div>{{ getUserList().uniqueId }} - {{ getUserList().name }}</div>
+        <div v-if="getUserList().uniqueId">{{ getUserList().uniqueId }} - {{ getUserList().name }}</div>
         <ul
           v-for="subordinate in getUserList().subordinates"
           :key="subordinate.uniqueId"
@@ -75,14 +75,14 @@
 </template>
 
 <script lang="ts" setup>
-import { defineProps, ref, computed } from "vue";
+import { defineProps, ref } from "vue";
 
 import { useToggleModal } from "@/composables/useToggleModal";
 import { useSelectedBlock } from "@/composables/useSelectedBlock";
 import { useMove } from "@/composables/useMove";
 import IconClose from "./icons/IconClose.vue";
 
-const props = defineProps({
+defineProps({
   title: String,
   blockName: String,
 });
@@ -91,7 +91,7 @@ const employeeId = ref("");
 const supervisorId = ref("");
 
 const { closeModal } = useToggleModal();
-const { increaseId, getBlockId, selectedBlockId, getSelectedBlock } =
+const { getBlockId, getSelectedBlock } =
   useSelectedBlock();
 const { movingItems, getUserList } = useMove();
 

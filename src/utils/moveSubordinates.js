@@ -1,11 +1,10 @@
 import { findAndMove } from "./findAndMove";
 
 export const moveSubordinates = (state, movedStack) => {
- console.log('moveSubordinates movedStack: ', movedStack)
  const stack = [[state, null]];
 
  while (stack.length) {
-  const [curr, parent] = stack.pop();
+  const [curr] = stack.pop();
 
   if (curr && movedStack && curr.uniqueId === movedStack.parentId) {
     findAndMove(movedStack.id, movedStack.parentId)
@@ -18,6 +17,5 @@ export const moveSubordinates = (state, movedStack) => {
   });
 }
 
-console.log('return ceo: ', state)
 return state
 }

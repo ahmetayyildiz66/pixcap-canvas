@@ -7,7 +7,6 @@ export const useLeftPanel = () => {
   };
 
   const toggleSidebar = () => {
-    console.log("toggleSidebar:", isOpen.value);
     isOpen.value = !isOpen.value;
   };
 

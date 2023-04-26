@@ -73,7 +73,7 @@ export const findAndMove = (uniqueId, supervisorId) => {
       if (curr.uniqueId === supervisorId && !curr.subordinates.length) {
         curr.subordinates.push(uniqueId)
         parent?.subordinates?.forEach(sub => {
-          if (sub.uniqueId === supervisorId) {
+          if (sub?.uniqueId === supervisorId) {
             sub.subordinates.push({
               uniqueId: uniqueId?.uniqueId,
               name: uniqueId?.name,
