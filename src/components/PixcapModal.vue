@@ -95,8 +95,6 @@ const { increaseId, getBlockId, selectedBlockId, getSelectedBlock } =
   useSelectedBlock();
 const { movingItems, getUserList } = useMove();
 
-const users = getUserList();
-
 const getBlock = () => {
   const selected = getSelectedBlock(getBlockId());
   return selected;
