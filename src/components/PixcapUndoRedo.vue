@@ -1,6 +1,6 @@
 <template>
   <div class="undo-redo">
-    <button class="undo-redo__buttons undo-redo__undo" :class="{'undo-disable': !app.getUndoStack().length}" @click="undo">
+    <button class="undo-redo__buttons undo-redo__undo" @click="undo">
       <IconUndo />
     </button>
     <button class="undo-redo__buttons undo-redo__redo" @click="redo">

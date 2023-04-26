@@ -1,10 +1,13 @@
 <template>
   <div class="modal-overlay">
     <div class="modal">
-      <h6 class="modal__heading">
-        {{ getBlock().type }} - {{ getBlock().id }}
+      <h6 class="modal__heading" v-if="getBlock()?.type">
+        {{ getBlock()?.type }} - {{ getBlock()?.id }}
       </h6>
-      <div class="modal__inputs" v-if="getBlock().type === 'Move'">
+      <h6 class="modal__heading" v-else>
+        Initial state
+      </h6>
+      <div class="modal__inputs" v-if="getBlock()?.type === 'Move'">
         <input
           placeholder="employeeId"
           class="input"
@@ -19,7 +22,7 @@
         />
       </div>
       <div class="center">
-        <button @click="onSave" v-if="getBlock().type === 'Move'">Save</button>
+        <button @click="onSave" v-if="getBlock()?.type === 'Move'">Save</button>
       </div>
       <div v-if="getUserList()" style="margin-top: 40px">
         <div>{{ getUserList().uniqueId }} - {{ getUserList().name }}</div>
@@ -120,7 +123,7 @@ const onSave = () => {
 .modal {
   // text-align: center;
   background-color: white;
-  height: auto;
+  height: 800px;
   width: 1000px;
   margin-top: 10%;
   padding: 60px 40px;

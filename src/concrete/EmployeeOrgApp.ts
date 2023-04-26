@@ -16,7 +16,7 @@ export class EmployeeOrgApp implements IEmployeeOrgApp {
     this.stack.push(movedElement.movedElements)
     return this.ceo
   }
-  undo(): Employee {
+  undo(): IUndoRedo {
     return moveSubordinates(this.ceo, this.stack.pop())
   }
   redo(): void {
