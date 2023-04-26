@@ -1,6 +1,6 @@
 <template>
   <div class="undo-redo">
-    <button class="undo-redo__buttons undo-redo__undo" @click="undo">
+    <button class="undo-redo__buttons undo-redo__undo" :class="{'undo-disable': !app.getUndoStack().length}" @click="undo">
       <IconUndo />
     </button>
     <button class="undo-redo__buttons undo-redo__redo" @click="redo">
@@ -67,5 +67,10 @@ const play = () => {
     margin-right: 1rem;
     background-color: var(--color-grey--2);
   }
+}
+
+.undo-disable{
+  cursor: default;
+  pointer-events: none;
 }
 </style>

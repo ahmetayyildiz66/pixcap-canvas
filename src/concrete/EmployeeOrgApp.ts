@@ -26,4 +26,8 @@ export class EmployeeOrgApp implements IEmployeeOrgApp {
   employeeList(): Employee {
     return this.ceo
   }
+
+  getUndoStack(): IUndoRedo[] {
+    return this.stack
+  }
 }

@@ -18,25 +18,50 @@
           v-model="supervisorId"
         />
       </div>
-      <button @click="onSave" v-if="getBlock().type === 'Move'">Save</button>
-      <div v-if="getUserList()">
-        <p>{{ getUserList().uniqueId }} - {{ getUserList().name }}</p>
+      <div class="center">
+        <button @click="onSave" v-if="getBlock().type === 'Move'">Save</button>
+      </div>
+      <div v-if="getUserList()" style="margin-top: 40px">
+        <div>{{ getUserList().uniqueId }} - {{ getUserList().name }}</div>
         <ul
           v-for="subordinate in getUserList().subordinates"
           :key="subordinate.uniqueId"
+          class="pl"
         >
-          <li>{{ subordinate.uniqueId }} - {{ subordinate.name }}</li>
-          <div v-if="subordinate">
-            <li v-for="sub in subordinate.subordinates" :key="sub.uniqueId">
-            {{ sub.uniqueId }} - {{ sub.name }}
-            <div v-if="sub">
-              <li v-for="s in sub.subordinates" :key="s.uniqueId">
-                {{ s.uniqueId }} - {{ s.name }}
-              </li>
-            </div>
-          </li>
+          <div class="pl">
+            {{ subordinate.uniqueId }} - {{ subordinate.name }}
           </div>
-        
+
+          <div v-if="subordinate" class="pl">
+            <div
+              v-for="sub in subordinate.subordinates"
+              :key="sub?.uniqueId"
+              class="pl"
+            >
+              <span class="pl" v-if="sub"
+                >{{ sub.uniqueId }} - {{ sub.name }}</span
+              >
+
+              <div v-if="sub" class="pl">
+                <div v-for="s in sub.subordinates" :key="s.uniqueId" class="pl">
+                  <span>{{ s.uniqueId }} - {{ s.name }}</span>
+                  <div v-if="s" class="pl">
+                    <div v-for="child in s.subordinates" :key="child.uniqueId">
+                      <span>{{ child.uniqueId }} - {{ child.name }}</span>
+                      <div v-if="child" class="pl">
+                        <div
+                          v-for="c in child.subordinates"
+                          :key="c.uniqueId"
+                        >
+                          <span>{{ c.uniqueId }} - {{ c.name }}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </ul>
       </div>
     </div>
@@ -69,7 +94,6 @@ const { movingItems, getUserList } = useMove();
 
 const users = getUserList();
 
-
 const getBlock = () => {
   const selected = getSelectedBlock(getBlockId());
   return selected;
@@ -94,7 +118,7 @@ const onSave = () => {
 }
 
 .modal {
-  text-align: center;
+  // text-align: center;
   background-color: white;
   height: auto;
   width: 1000px;
@@ -151,5 +175,23 @@ button {
 
 .input {
   padding: 10px;
+}
+
+.align-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: left;
+}
+
+.center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.pl {
+  padding-left: 30px;
 }
 </style>
