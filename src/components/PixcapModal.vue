@@ -46,17 +46,17 @@
               >
 
               <div v-if="sub" class="pl">
-                <div v-for="s in sub.subordinates" :key="s.uniqueId" class="pl">
-                  <span>{{ s.uniqueId }} - {{ s.name }}</span>
+                <div v-for="s in sub.subordinates" :key="s?.uniqueId" class="pl">
+                  <span v-if="s">{{ s.uniqueId }} - {{ s.name }}</span>
                   <div v-if="s" class="pl">
-                    <div v-for="child in s.subordinates" :key="child.uniqueId">
-                      <span>{{ child.uniqueId }} - {{ child.name }}</span>
+                    <div v-for="child in s.subordinates" :key="child?.uniqueId">
+                      <span>{{ child?.uniqueId }} - {{ child.name }}</span>
                       <div v-if="child" class="pl">
                         <div
                           v-for="c in child.subordinates"
-                          :key="c.uniqueId"
+                          :key="c?.uniqueId"
                         >
-                          <span>{{ c.uniqueId }} - {{ c.name }}</span>
+                          <span v-if="c">{{ c?.uniqueId }} - {{ c?.name }}</span>
                         </div>
                       </div>
                     </div>

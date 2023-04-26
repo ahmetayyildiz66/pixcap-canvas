@@ -33,7 +33,7 @@ export class EmployeeOrgApp implements IEmployeeOrgApp {
     const poppedElement = this.redoStack.pop()
     
     this.ceo = findAndMove(poppedElement?.id, poppedElement?.supervisorID)
-    if (poppedElement && this.stack.length) {
+    if (poppedElement) {
       const reverSupervisorId = poppedElement.supervisorID
       poppedElement.supervisorID = poppedElement?.parentId
       poppedElement.parentId = reverSupervisorId!
