@@ -8,7 +8,9 @@
 * SCSS
 
 ## How did I implement it?
-* I did NOT copy the previous state while doing **Undo/Redo**
+* I did NOT copy the previous state while doing **Undo/Redo**, I stored the command with its arguments for example:
+![Screenshot 2023-04-28 at 05 03 02](https://user-images.githubusercontent.com/19995632/235044562-bb166dec-6b7e-44b4-99ee-dce579b8466b.png)
+
 * I iterated over the nested object by using a **while** loop because recursion has some performance issues
 
 ## Project setup
